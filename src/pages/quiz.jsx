@@ -11,20 +11,20 @@ export default function Event() {
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [quizzes, setQuizzes] = useState([]);
   const [isCheckedAnswer, setIsCheckedAnswer] = useState(false);
-  const [isProgress, setIsProgress] = useState(false);
-  const maxStage = 5;
+  const [maxStage, setMaxStage] = useState(0);
 
   const getData = () => {
     setQuizzes(data.quizzes);
+    setMaxStage(data.quizzes.length);
   };
 
   useEffect(() => {
-    if (location.pathname.quizId !== 1 && !isProgress) {
+    if (location.pathname.quizId !== 1 && maxStage === 0) {
       navigate("/quiz/1");
     }
     console.log("hi");
     getData();
-  }, []);
+  }, [maxStage, location.pathname.quizId, navigate]);
 
   const goNextQuiz = () => {
     if (!selectedAnswer) {
@@ -46,7 +46,6 @@ export default function Event() {
       navigate(`/quiz/${stage}`);
       setSelectedAnswer("");
       setQuizStep("watch");
-      setIsProgress(true);
       setIsCheckedAnswer(false);
     }
   };
@@ -56,7 +55,7 @@ export default function Event() {
       alert("반드시 하나 이상의 항목을 클릭하세요");
       return;
     }
-    
+
     const isCorrect = selectedAnswer === quizzes[stage - 1].answer;
     if (isCorrect) {
       alert("정답!");
@@ -96,6 +95,9 @@ export default function Event() {
                   allowFullScreen
                 ></iframe>
                 <button onClick={startQuiz}>퀴즈 풀러가기</button>
+                {stage !== maxStage && (
+                  <button onClick={() => navigate("/")}>홈으로 돌아가기</button>
+                )}
               </div>
             </div>
           )}
@@ -124,7 +126,7 @@ export default function Event() {
                 <button onClick={goNextQuiz} disabled={!isCheckedAnswer}>
                   {stage === maxStage ? "퀴즈 마치기" : "다음 퀴즈로"}
                 </button>
-                {stage !== 5 && (
+                {stage !== maxStage && (
                   <button onClick={() => navigate("/")}>홈으로 돌아가기</button>
                 )}
               </div>
