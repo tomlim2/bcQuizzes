@@ -1,0 +1,21 @@
+.quizFinish {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  
+}
+
+.quizFinish h2{
+    font-size: 2rem;
+}
+
+.quizFinish p{
+    margin-top: 12px;
+}
+
+.quizFinish button{
+    margin-top: 24px;
+}
