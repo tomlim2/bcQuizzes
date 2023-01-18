@@ -22,6 +22,7 @@ export default function Event() {
     if (location.pathname.quizId !== 1 && !isProgress) {
       navigate("/quiz/1");
     }
+    console.log("hi");
     getData();
   }, []);
 
@@ -51,6 +52,11 @@ export default function Event() {
   };
 
   const checkAnswer = () => {
+    if (!selectedAnswer) {
+      alert("반드시 하나 이상의 항목을 클릭하세요");
+      return;
+    }
+    
     const isCorrect = selectedAnswer === quizzes[stage - 1].answer;
     if (isCorrect) {
       alert("정답!");
